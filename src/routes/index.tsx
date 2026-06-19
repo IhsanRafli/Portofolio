@@ -1,29 +1,42 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Starfield } from "@/components/Starfield";
+import { Navbar } from "@/components/Navbar";
+import { Hero } from "@/components/Hero";
+import { Projects } from "@/components/Projects";
+import { Certificates } from "@/components/Certificates";
+import { PhysicalDocs } from "@/components/PhysicalDocs";
+import { Skills } from "@/components/Skills";
+import { Contact } from "@/components/Contact";
+import { HUD } from "@/components/HUD";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "Kunkey — Full Stack Web Developer" },
+      { name: "description", content: "Sci-fi themed portfolio of Kunkey, a Full Stack web developer. Explore live GitHub projects, certifications and hardware experiments." },
+      { property: "og:title", content: "Kunkey — Full Stack Web Developer" },
+      { property: "og:description", content: "Sci-fi themed portfolio with live GitHub projects, certifications and hardware experiments." },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="relative min-h-screen bg-[#050509] text-foreground">
+      <Starfield />
+      <div className="relative z-10">
+        <Navbar />
+        <main>
+          <Hero />
+          <Projects />
+          <Certificates />
+          <PhysicalDocs />
+          <Skills />
+          <Contact />
+        </main>
+      </div>
+      <HUD />
     </div>
   );
 }
