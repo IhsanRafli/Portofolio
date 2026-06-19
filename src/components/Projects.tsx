@@ -28,13 +28,28 @@ const langColor: Record<string, string> = {
 };
 
 const fallback: Repo[] = [
-  { id: 1, name: "stellar-dashboard", description: "Real-time analytics dashboard with React, WebSockets and a custom charting engine.", html_url: "#", homepage: "https://example.com", stargazers_count: 142, forks_count: 23, language: "TypeScript", topics: ["react", "websocket"], fork: false },
-  { id: 2, name: "nebula-api", description: "High-throughput REST + GraphQL API gateway built on Node.js and Redis Streams.", html_url: "#", homepage: null, stargazers_count: 89, forks_count: 11, language: "JavaScript", topics: ["node", "api"], fork: false },
-  { id: 3, name: "orbit-cli", description: "Lightweight CLI to scaffold full-stack web apps with type-safe RPC out of the box.", html_url: "#", homepage: null, stargazers_count: 54, forks_count: 6, language: "Rust", topics: ["cli", "scaffold"], fork: false },
-  { id: 4, name: "lunar-portfolio", description: "Open-source sci-fi themed portfolio template featuring 3D interactions.", html_url: "#", homepage: "https://example.com", stargazers_count: 211, forks_count: 47, language: "TypeScript", topics: ["portfolio"], fork: false },
-  { id: 5, name: "comet-auth", description: "Drop-in auth library with passkeys, magic links and OAuth providers.", html_url: "#", homepage: null, stargazers_count: 77, forks_count: 9, language: "TypeScript", topics: ["auth"], fork: false },
-  { id: 6, name: "pulsar-edge", description: "Edge function framework with sub-millisecond cold starts and KV bindings.", html_url: "#", homepage: "https://example.com", stargazers_count: 168, forks_count: 19, language: "Go", topics: ["edge"], fork: false },
+  { id: 1, name: "stellar-dashboard", description: "Example mission — connect your GitHub to populate.", html_url: "#", homepage: null, stargazers_count: 0, forks_count: 0, language: "TypeScript", topics: [], fork: false },
 ];
+
+const imageMap: { match: RegExp; url: string }[] = [
+  { match: /robot|laborator/i, url: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=70" },
+  { match: /mobile|flutter|dart|app/i, url: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&q=70" },
+  { match: /padi|rice|tani|agri/i, url: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=70" },
+  { match: /kecerdasan|\bai\b|\bml\b|machine|cluster|jupyter|deteksi/i, url: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=800&q=70" },
+  { match: /aqua|water|hydro/i, url: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?w=800&q=70" },
+  { match: /game/i, url: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=70" },
+  { match: /ecommerce|shop|store/i, url: "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=70" },
+  { match: /coffee/i, url: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=70" },
+  { match: /docs|documentation|mdx/i, url: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=70" },
+  { match: /portfolio/i, url: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=70" },
+];
+const defaultImage = "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=70";
+
+function pickImage(repo: Repo): string {
+  const hay = `${repo.name} ${repo.description ?? ""} ${(repo.topics ?? []).join(" ")} ${repo.language ?? ""}`;
+  for (const { match, url } of imageMap) if (match.test(hay)) return url;
+  return defaultImage;
+}
 
 // ASCII keyboard SVG element
 function KeyboardVisual() {
@@ -93,6 +108,7 @@ function MonitorVisual() {
 
 function ProjectCard({ repo, index }: { repo: Repo; index: number }) {
   const isWebDemo = !!repo.homepage;
+  const img = pickImage(repo);
   return (
     <motion.a
       href={repo.html_url}
@@ -107,8 +123,25 @@ function ProjectCard({ repo, index }: { repo: Repo; index: number }) {
     >
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[color:var(--neon-purple)]/0 to-[color:var(--neon-gold)]/0 transition-all duration-500 group-hover:from-[color:var(--neon-purple)]/10 group-hover:to-[color:var(--neon-gold)]/10" />
 
-      <div className="mb-4 h-28 overflow-hidden rounded-xl border border-[color:var(--neon-purple)]/30 bg-black/60">
-        {isWebDemo ? <MonitorVisual /> : <KeyboardVisual />}
+      <div className="relative mb-4 h-36 overflow-hidden rounded-xl border border-[color:var(--neon-purple)]/30 bg-black/60">
+        <img
+          src={img}
+          alt={repo.name}
+          loading="lazy"
+          className="h-full w-full object-cover opacity-80 transition duration-500 group-hover:scale-110 group-hover:opacity-100"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 -top-4 h-8 bg-gradient-to-b from-[color:var(--neon-green)]/40 to-transparent blur-md animate-scan" />
+        <div className="absolute bottom-2 left-2 right-2 flex items-end justify-between gap-2">
+          <span className="rounded-md border border-[color:var(--neon-purple)]/40 bg-black/70 px-2 py-0.5 font-mono text-[10px] text-[color:var(--neon-purple)]">
+            {isWebDemo ? "WEB / LIVE" : "SOURCE"}
+          </span>
+          {isWebDemo && (
+            <span className="rounded-md bg-[color:var(--neon-green)]/20 px-2 py-0.5 font-mono text-[10px] text-[color:var(--neon-green)]">
+              ● ONLINE
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="flex items-start justify-between gap-3">
@@ -134,7 +167,14 @@ function ProjectCard({ repo, index }: { repo: Repo; index: number }) {
         )}
         <span className="inline-flex items-center gap-1"><Star className="h-3.5 w-3.5 text-[color:var(--neon-gold)]" /> {repo.stargazers_count}</span>
         <span className="inline-flex items-center gap-1"><GitFork className="h-3.5 w-3.5" /> {repo.forks_count}</span>
-        {isWebDemo && <span className="ml-auto rounded-md bg-[color:var(--neon-green)]/15 px-2 py-0.5 font-mono text-[10px] text-[color:var(--neon-green)]">LIVE</span>}
+        {isWebDemo && (
+          <span
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.open(repo.homepage!, "_blank"); }}
+            className="ml-auto cursor-pointer rounded-md bg-[color:var(--neon-green)]/15 px-2 py-0.5 font-mono text-[10px] text-[color:var(--neon-green)] hover:bg-[color:var(--neon-green)]/30"
+          >
+            VISIT →
+          </span>
+        )}
       </div>
     </motion.a>
   );
@@ -184,7 +224,7 @@ export function Projects() {
         </div>
       ) : (
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {repos.slice(0, 9).map((r, i) => (
+          {repos.map((r, i) => (
             <ProjectCard key={r.id} repo={r} index={i} />
           ))}
         </div>
