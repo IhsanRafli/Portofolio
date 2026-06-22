@@ -1,17 +1,28 @@
 import { motion } from "framer-motion";
 import { Award, ShieldCheck } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { SectionHeader } from "./Projects";
 
-const certs = [
-  { title: "AWS Certified Solutions Architect", org: "Amazon Web Services", date: "Mar 2025", hue: 35 },
-  { title: "Google Professional Cloud Developer", org: "Google Cloud", date: "Jan 2025", hue: 210 },
-  { title: "Meta Front-End Developer", org: "Meta / Coursera", date: "Nov 2024", hue: 240 },
-  { title: "TensorFlow Developer Certificate", org: "Google", date: "Aug 2024", hue: 25 },
-  { title: "Certified Kubernetes Application Dev", org: "CNCF", date: "May 2024", hue: 195 },
-  { title: "MongoDB Associate Developer", org: "MongoDB University", date: "Feb 2024", hue: 145 },
+const FALLBACK = [
+  { id: "f1", title: "AWS Certified Solutions Architect", org: "Amazon Web Services", date: "Mar 2025", hue: 35, verify_url: null },
 ];
 
 export function Certificates() {
+  const { data } = useQuery({
+    queryKey: ["certificates"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("certificates")
+        .select("*")
+        .order("sort_order", { ascending: true });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const certs = (data && data.length > 0 ? data : FALLBACK) as typeof FALLBACK;
+
   return (
     <section id="certificates" className="relative mx-auto max-w-6xl px-6 py-24">
       <SectionHeader
@@ -23,7 +34,7 @@ export function Certificates() {
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {certs.map((c, i) => (
           <motion.div
-            key={c.title}
+            key={c.id}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -43,8 +54,6 @@ export function Certificates() {
                   <p className="mt-1 text-center font-mono text-[10px] tracking-widest text-[color:var(--neon-green)]">VERIFIED</p>
                 </div>
               </div>
-              <div className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                   style={{ boxShadow: "inset 0 0 60px rgba(139,92,246,0.6)" }} />
             </div>
 
             <div className="flex flex-1 flex-col p-5">
@@ -52,7 +61,9 @@ export function Certificates() {
               <p className="mt-1 text-sm text-foreground/60">{c.org}</p>
               <p className="mt-1 font-mono text-xs text-foreground/40">Issued {c.date}</p>
               <a
-                href="#"
+                href={c.verify_url || "#"}
+                target={c.verify_url ? "_blank" : undefined}
+                rel="noreferrer"
                 className="mt-4 inline-flex items-center justify-center gap-2 rounded-lg border border-[color:var(--neon-gold)] bg-[color:var(--neon-gold)]/10 px-3 py-2 text-sm font-semibold text-[color:var(--neon-gold)] glow-gold transition hover:bg-[color:var(--neon-gold)]/20"
               >
                 Verify Credential →
