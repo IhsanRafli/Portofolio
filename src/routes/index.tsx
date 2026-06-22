@@ -12,9 +12,9 @@ import { HUD } from "@/components/HUD";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Kunkey — Full Stack Web Developer" },
-      { name: "description", content: "Sci-fi themed portfolio of Kunkey, a Full Stack web developer. Explore live GitHub projects, certifications and hardware experiments." },
-      { property: "og:title", content: "Kunkey — Full Stack Web Developer" },
+      { title: "san_dev — Full Stack Web Developer" },
+      { name: "description", content: "Sci-fi themed portfolio of san_dev, a Full Stack web developer. Explore live GitHub projects, certifications and hardware experiments." },
+      { property: "og:title", content: "san_dev — Full Stack Web Developer" },
       { property: "og:description", content: "Sci-fi themed portfolio with live GitHub projects, certifications and hardware experiments." },
     ],
   }),

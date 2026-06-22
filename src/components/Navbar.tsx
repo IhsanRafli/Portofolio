@@ -39,9 +39,9 @@ export function Navbar() {
       <nav className="flex w-full max-w-5xl items-center justify-between rounded-2xl border border-[color:var(--neon-purple)]/30 bg-black/40 px-5 py-3 backdrop-blur-xl shadow-[0_0_30px_rgba(139,92,246,0.15)]">
         <a href="#home" className="flex items-center gap-2 font-bold tracking-wider">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-[color:var(--neon-gold)] to-[color:var(--neon-purple)] text-black">
-            K
+            S
           </span>
-          <span className="text-glow-gold text-[color:var(--neon-gold)]">KUNKEY</span>
+          <span className="text-glow-gold text-[color:var(--neon-gold)]">SAN</span>
           <span className="text-xs text-[color:var(--neon-green)] font-mono">_dev</span>
         </a>
         <ul className="hidden items-center gap-1 md:flex">

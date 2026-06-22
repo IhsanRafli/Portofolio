@@ -70,7 +70,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 rounded-full border border-[color:var(--neon-purple)]/60 bg-[color:var(--neon-purple)]/10 px-4 py-1.5 text-sm font-medium text-[color:var(--neon-purple)] text-glow-purple"
           >
             <span className="h-2 w-2 animate-pulse rounded-full bg-[color:var(--neon-purple)]" />
-            Hi, I'm Kunkey!
+            Hi, I'm Ihsan!
           </motion.div>
 
           <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
