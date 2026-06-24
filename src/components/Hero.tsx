@@ -2,7 +2,8 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useEffect, useState } from "react";
 import astronaut from "@/assets/astronaut.png";
 
-const roles = ["Frontend", "Backend", "Full Stack"];
+
+const roles = ["Frontend", "Backend", "Full Stack", "Embedded AI"];
 
 function TypeCycle() {
   const [i, setI] = useState(0);
@@ -75,7 +76,7 @@ export function Hero() {
 
           <h1 className="mt-6 font-display text-5xl font-bold leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">
             A <TypeCycle />
-            <br /> Web Developer<span className="text-[color:var(--neon-gold)]">_</span>
+            <br /> Software Engineer<span className="text-[color:var(--neon-gold)]">_</span>
           </h1>
 
           <p className="mt-6 max-w-lg text-base text-foreground/70 md:text-lg">
